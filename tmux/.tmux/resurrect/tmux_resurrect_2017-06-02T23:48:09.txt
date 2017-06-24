@@ -1,0 +1,4 @@
+pane	0	1	:xxd	1	:*	1	:/Users/jerryjzy	1	xxd	:xxd
+pane	0	1	:xxd	1	:*	2	:/Volumes/STUFF/archbackup	0	zsh	:
+window	0	1	1	:*	be44,130x36,0,0{64x36,0,0,0,65x36,65,0,1}
+state	0	
