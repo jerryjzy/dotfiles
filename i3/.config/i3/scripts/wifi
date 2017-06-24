@@ -1,0 +1,17 @@
+#!/bin/bash
+
+OUTCOLOR=""
+FAILCOLOR="#FF0000"
+INTERFACE="${BLOCK_INSTANCE:-wlp3s0}"
+QUALITY=$(grep $INTERFACE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
+SSID=$(iwgetid -r)
+
+if [[ $(rfkill list wifi | grep yes) != "" ]]; then
+    # If wifi is either hard or soft blocked
+    echo -e "off \noff \n$FAILCOLOR";
+elif [[ $SSID == "" ]]; then
+    # If there's no SSID
+    echo -e "wifi \nwifi \n$FAILCOLOR";
+else
+    echo -e "$SSID ($QUALITY%) \n$SSID ($QUALITY%) \n$OUTCOLOR";
+fi;
