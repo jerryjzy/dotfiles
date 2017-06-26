@@ -1,9 +1,9 @@
 Lain
 ====
 
---------------------------------------------------
-Layouts, widgets and utilities for Awesome WM 3.5+
---------------------------------------------------
+-------------------------------------------------
+Layouts, widgets and utilities for Awesome WM 4.x
+-------------------------------------------------
 
 :Author: Luke Bonham <dada [at] archlinux [dot] info>
 :Version: git
@@ -13,7 +13,7 @@ Layouts, widgets and utilities for Awesome WM 3.5+
 Description
 -----------
 
-Successor of awesome-vain_, this module provides new layouts, a set of widgets and utility functions, in order to improve Awesome_ usability and configurability.
+Successor of awesome-vain_, this module provides alternative layouts, asynchronous widgets and utility functions for Awesome_ WM.
 
 Read the wiki_ for all the info.
 
@@ -26,13 +26,13 @@ Just make sure that:
 
 - Your code fits with the general style of the module. In particular, you should use the same indentation pattern that the code uses, and also avoid adding space at the ends of lines.
 
-- Your code its easy to understand, maintainable, and modularized. You should also avoid code duplication wherever possible by adding functions or using ``lain.helpers``. If something is unclear, and you can't write it in such a way that it will be clear, explain it with a comment.
+- Your code its easy to understand, maintainable, and modularized. You should also avoid code duplication wherever possible by adding functions or using lain.helpers_. If something is unclear, and you can't write it in such a way that it will be clear, explain it with a comment.
 
 - You test your changes before submitting to make sure that not only your code works, but did not break other parts of the module too!
 
 - You eventually update ``wiki`` submodule with a thorough section.
 
-Contributed widgets have to be put in ``lain/widgets/contrib``.
+Contributed widgets have to be put in ``widget/contrib``.
 
 Screenshots
 -----------
@@ -45,3 +45,4 @@ Screenshots
 .. _awesome-vain: https://github.com/vain/awesome-vain
 .. _Awesome: https://github.com/awesomeWM/awesome
 .. _wiki: https://github.com/copycat-killer/lain/wiki
+.. _lain.helpers: https://github.com/copycat-killer/lain/blob/master/helpers.lua
