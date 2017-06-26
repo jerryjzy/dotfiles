@@ -1,0 +1,7 @@
+pane	0	1	:/usr/local/lib	1	:*	1	:/usr/local/lib	1	zsh	:
+pane	0	1	:/usr/local/lib	1	:*	2	:/Users/jerryjzy/Downloads	0	zsh	:
+pane	1	1	:osmc@192.168.2.38	1	:*	1	:/Users/jerryjzy	1	ssh	:ssh osmc@192.168.2.38
+pane	1	1	:osmc@192.168.2.38	1	:*	2	:/Users/jerryjzy	0	zsh	:
+window	0	1	1	:*	4196,80x24,0,0[80x12,0,0,0,80x11,0,13,2]
+window	1	1	1	:*	4284,204x48,0,0{102x48,0,0,3,101x48,103,0,4}
+state	1	

@@ -1,0 +1,4 @@
+pane	0	1	:..ges/countdown	1	:*	1	:/Users/jerryjzy/Documents/Recreation/Projects/challenges/countdown	1	nvim	:nvim countdown.cpp
+pane	0	1	:..ges/countdown	1	:*	2	:/Users/jerryjzy/Documents/Recreation/Projects/challenges/countdown	0	zsh	:
+window	0	1	1	:*	4be0,272x58,0,0{136x58,0,0,5,135x58,137,0,7}
+state	0	
