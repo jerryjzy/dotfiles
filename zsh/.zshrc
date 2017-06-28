@@ -7,13 +7,7 @@ export ZSH=/home/jerryjzy/.config/oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="bullet-train"
-# POWERLEVEL9K_MODE='compatible'
 
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(time dir vcs)
-# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-# POWERLEVEL9K_STATUS_VERBOSE=false
-# POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
-# POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 
 # Base16 Shell
 BASE16_SHELL="$HOME/.config/base16-shell/base16-eighties.dark.sh"
@@ -39,10 +33,10 @@ BASE16_SHELL="$HOME/.config/base16-shell/base16-eighties.dark.sh"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -66,6 +60,7 @@ plugins=(git zsh-syntax-highlighting colored-man-pages)
 # User configuration
 
 export PATH=/opt/mpich/bin/:$HOME/bin:/usr/local/bin:$HOME/script:$PATH
+export SUDO_EDITOR=nvim
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -104,4 +99,3 @@ alias c="clear"
 alias e="nvim"
 alias matlab="matlab -desktop"
 alias cd..="cd .."
-alias git="hub"

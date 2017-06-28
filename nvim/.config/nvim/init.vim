@@ -79,6 +79,7 @@ set modeline
 set modelines=5
 set splitbelow
 set splitright
+set mouse=a
 filetype on
 set cursorline
 set clipboard+=unnamedplus
@@ -161,7 +162,7 @@ nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
 
 " Write with elevation
-command W w !sudo tee % > /dev/null
+" command W w !sudo tee % > /dev/null
 
 " Force Quit with :Q
 command -nargs=0 Quit :qa!
