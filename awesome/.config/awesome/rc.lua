@@ -1,9 +1,9 @@
 
 --[[
-                                       
-     Awesome WM configuration template 
-     github.com/copycat-killer         
-                                       
+
+     Awesome WM configuration template
+     github.com/copycat-killer
+
 --]]
 
 -- {{{ Required libraries
@@ -58,13 +58,14 @@ end
 
 run_once({  "compton",
             "fcitx",
+            "nm-applet",
+            "redshift-gtk",
             "xmodmap /home/jerryjzy/.Xmodmap",
             "/home/jerryjzy/script/hdmi.sh",
-            "redshift-gtk",
             "devmon",
             "conky",
             "xscreensaver -no-splash",
-            "unclutter", 
+            "unclutter",
         })
 
 -- }}}
@@ -478,7 +479,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "x", function ()
         awful.spawn(string.format("dmenu_run -i -fn 'Monospace' -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
         beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
-		end)
+        end)
     --]]
     --
     --
