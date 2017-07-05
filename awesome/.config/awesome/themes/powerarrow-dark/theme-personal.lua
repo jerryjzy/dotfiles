@@ -252,6 +252,14 @@ local net = lain.widget.net({
     end
 })
 
+-- FCITX Input method
+local fcitx = wibox.widget({
+    markup = '拼',
+    align = 'center',
+    valign = 'center',
+    widget = wibox.widget.textbox
+})
+
 -- Separators
 local spr     = wibox.widget.textbox(' ')
 local arrl_dl = separators.arrow_left(theme.bg_focus, "alpha")
@@ -327,6 +335,7 @@ function theme.at_screen_connect(s)
             arrl_ld,
             wibox.container.background(neticon, theme.bg_focus),
             wibox.container.background(net.widget, theme.bg_focus),
+            -- fcitx,
             arrl_dl,
             volicon,
             theme.volume.widget,

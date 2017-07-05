@@ -51,19 +51,22 @@ local function run_once(cmd_arr)
         if firstspace then
             findme = cmd:sub(0, firstspace-1)
         end
-        awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", findme, cmd))
+        -- awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", findme, cmd))
+        awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
     end
 end
 
-run_once({  "compton&",
-            "redshift-gtk&",
-            "devmon&",
-            "conky&",
-            "xscreensaver -no-splash&",
-            "unclutter -root&", 
-            "/home/jerryjzy/script/hdmi.sh&",
-            "xmodmap /home/jerryjzy/.Xmodmap&"
+run_once({  "compton",
+            "fcitx",
+            "xmodmap /home/jerryjzy/.Xmodmap",
+            "/home/jerryjzy/script/hdmi.sh",
+            "redshift-gtk",
+            "devmon",
+            "conky",
+            "xscreensaver -no-splash",
+            "unclutter", 
         })
+
 -- }}}
 
 -- {{{ Variable definitions
@@ -209,9 +212,7 @@ awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) 
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-    awful.button({ }, 3, function () awful.util.mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+    awful.button({ }, 3, function () awful.util.mymainmenu:toggle() end)
 ))
 -- }}}
 
