@@ -470,6 +470,10 @@ globalkeys = awful.util.table.join(
     -- Lock screen
     awful.key({ modkey, "Shift" }, "x", function () awful.util.spawn("xscreensaver-command -lock") end),
 
+    -- Shutdown dialog
+    awful.key({ modkey, "Control" }, "q", function () awful.util.spawn("oblogout", false) end),
+    awful.key({ }, "XF86PowerOff", function () awful.util.spawn("oblogout", false) end),
+
     -- Default
     --[[ Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
@@ -625,6 +629,11 @@ awful.rules.rules = {
 
     { rule = { class = "Gimp", role = "gimp-image-window" },
           properties = { maximized = true } },
+
+    -- OBlogout full screen
+    { rule = { class = "Oblogout" },
+      properties = { fullscreen = true }},
+
 }
 -- }}}
 

@@ -34,6 +34,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'lervag/vimtex'
 Plug 'Raimondi/delimitMate'
 Plug 'Cognoscan/vim-vhdl'
+Plug 'ledger/vim-ledger'
 
 function! DoRemote(arg)
   UpdateRemotePlugins
