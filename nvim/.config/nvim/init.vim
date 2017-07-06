@@ -64,6 +64,12 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 " }}}
 
+" background transparancy
+" highlight Normal ctermbg=none
+" highlight NonText ctermbg=none
+
+autocmd VimEnter * hi Normal ctermbg=none
+
 " System setup --------------------------------------------------{{{
 
 set noshowmode
@@ -102,6 +108,8 @@ set undofile
 set undodir="~/.vim_undo_files"
 
 set sh=/bin/zsh
+
+
 
 " Remember cursor position between vim sessions
 autocmd BufReadPost *
