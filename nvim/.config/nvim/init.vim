@@ -40,7 +40,8 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-clang'
+" Plug 'zchee/deoplete-clang'
+Plug 'tweekmonster/deoplete-clang2'
 Plug 'zchee/deoplete-jedi'
 
 Plug 'ryanoasis/vim-devicons'
@@ -136,7 +137,7 @@ au BufNewFile * set noeol
 autocmd VimEnter * set nosc
 
 " Highlight 80 character limit
-set colorcolumn=80
+set colorcolumn=+1
 highlight colorcolumn ctermbg=236
 
 " automatic setup for assembly
@@ -241,8 +242,8 @@ let g:vimtex_view_general_viewer="zathura"
 let g:vimtex_latexmk_build_dir="./.build/"
 
 " Ultisnips
-let g:UltiSnipsExpandTrigger="<C-Space>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<s-tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
 " let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " deoplete.nvim
