@@ -1,0 +1,96 @@
+
+xscreensaver.splash: false
+
+!font settings
+xscreensaver.Dialog.headingFont:        -*-terminus-bold-r-*-*-22-*-*-*-*-*-*-*
+xscreensaver.Dialog.bodyFont:           -*-terminus-medium-r-*-*-22-*-*-*-*-*-*-*
+xscreensaver.Dialog.labelFont:          -*-terminus-medium-r-*-*-22-*-*-*-*-*-*-*
+xscreensaver.Dialog.unameFont:          -*-terminus-medium-r-*-*-22-*-*-*-*-*-*-*
+xscreensaver.Dialog.buttonFont:         -*-terminus-bold-r-*-*-22-*-*-*-*-*-*-*
+xscreensaver.Dialog.dateFont:           -*-terminus-medium-r-*-*-22-*-*-*-*-*-*-*
+xscreensaver.passwd.passwdFont:         -*-terminus-bold-r-*-*-22-*-*-*-*-*-*-*
+
+!general dialog box (affects main hostname, username, password text)
+xscreensaver.Dialog.foreground:         #111111
+xscreensaver.Dialog.background:         #ffffff
+xscreensaver.Dialog.topShadowColor:     #111111
+xscreensaver.Dialog.bottomShadowColor:  #111111
+xscreensaver.Dialog.Button.foreground:  #ffffff
+xscreensaver.Dialog.Button.background:  #666666
+
+!username/password input box and date text colour
+xscreensaver.Dialog.text.foreground:    #ffffff
+xscreensaver.Dialog.text.background:    #666666
+xscreensaver.Dialog.internalBorderWidth:44
+xscreensaver.Dialog.borderWidth:        20
+xscreensaver.Dialog.shadowThickness:    4
+
+!timeout bar (background is actually determined by Dialog.text.background)
+xscreensaver.passwd.thermometer.foreground:  #ff0000
+xscreensaver.passwd.thermometer.background:  #000000
+xscreensaver.passwd.thermometer.width:       8
+
+!datestamp format--see the strftime(3) manual page for details
+xscreensaver.dateFormat:    %I:%M%P %b %d
+
+! rxvt-unicode settings
+
+URxvt.font: xft:Iosevka Nerd Font:size=14
+URxvt*scrollBar: false
+URxvt*internalBorder: 0
+
+! Disable ctrl-shift
+URxvt*iso14755_52: false
+URxvt*iso14755: false
+
+URxvt*foreground: #ebdbb2
+URxvt*depth: 32 
+urxvt*background: rgba:1800/1800/1800/d000
+
+URxvt.color0:   #282828
+URxvt.color1:   #cc241d
+URxvt.color2:   #98971a
+URxvt.color3:   #d79921
+URxvt.color4:   #458588
+URxvt.color5:   #b16286
+URxvt.color6:   #689d6a
+URxvt.color7:   #a89984
+URxvt.color8:   #928374
+URxvt.color9:   #fb4934
+URxvt.color10:  #b8bb26
+URxvt.color11:  #fabd2f
+URxvt.color12:  #83a598
+URxvt.color13:  #d3869b
+URxvt.color14:  #8ec07c
+URxvt.color15:  #ebdbb2
+
+URxvt.color24:  #076678
+URxvt.color66:  #427b58
+URxvt.color88:  #9d0006
+URxvt.color96:  #8f3f71
+URxvt.color100: #79740e
+URxvt.color108: #8ec07c
+URxvt.color109: #83a598
+URxvt.color130: #af3a03
+URxvt.color136: #b57614
+URxvt.color142: #b8bb26
+URxvt.color167: #fb4934
+URxvt.color175: #d3869b
+URxvt.color208: #fe8019
+URxvt.color214: #fabd2f
+URxvt.color223: #ebdbb2
+URxvt.color228: #f2e5bc
+URxvt.color229: #fbf1c7
+URxvt.color230: #f9f5d7
+URxvt.color234: #1d2021
+URxvt.color235: #282828
+URxvt.color236: #32302f
+URxvt.color237: #3c3836
+URxvt.color239: #504945
+URxvt.color241: #665c54
+URxvt.color243: #7c6f64
+URxvt.color244: #928374
+URxvt.color245: #928374
+URxvt.color246: #a89984
+URxvt.color248: #bdae93
+URxvt.color250: #d5c4a1
