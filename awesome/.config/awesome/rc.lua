@@ -61,11 +61,11 @@ run_once({  "compton",
             "nm-applet",
             "redshift-gtk",
             "xmodmap /home/jerryjzy/.Xmodmap",
-            "/home/jerryjzy/script/hdmi.sh",
             "devmon",
             "conky",
             "xscreensaver -no-splash",
             "unclutter",
+            "/home/jerryjzy/script/hdmi.sh",
         })
 
 -- }}}
