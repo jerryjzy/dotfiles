@@ -74,7 +74,7 @@ run_once({  "compton",
 local chosen_theme = "powerarrow-dark"
 local modkey       = "Mod4"
 local altkey       = "Mod1"
-local terminal     = "urxvt"
+local terminal     = "termite"
 local editor       = os.getenv("EDITOR") or "nvim"
 local gui_editor   = "gvim"
 local browser      = "google-chrome-stable"

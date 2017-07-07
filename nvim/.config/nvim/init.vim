@@ -8,9 +8,6 @@ call plug#begin('~/.vim/plugged')
 
 " Syntax
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'suan/vim-instant-markdown'
-Plug 'arakashic/chromatica.nvim'
 " Plug 'Yggdroot/indentLine'
 
 Plug 'neomake/neomake'
@@ -23,34 +20,44 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/vim-github-dashboard'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
-" Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+" Visual Plugins
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'janko-m/vim-test'
-Plug 'tpope/vim-commentary'
-Plug 'Shirk/vim-gas'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'lervag/vimtex'
-Plug 'Raimondi/delimitMate'
-Plug 'Cognoscan/vim-vhdl'
-Plug 'ledger/vim-ledger'
+Plug 'ryanoasis/vim-devicons'
+Plug 'Yggdroot/indentLine'
 
+" Utility Plugins
+Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'Raimondi/delimitMate'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+
+" Completion Plugins
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'zchee/deoplete-clang'
 Plug 'tweekmonster/deoplete-clang2'
-Plug 'zchee/deoplete-jedi'
 
-Plug 'ryanoasis/vim-devicons'
+" Syntax Plugins
+Plug 'zchee/deoplete-jedi'
+Plug 'Cognoscan/vim-vhdl'
+Plug 'Shirk/vim-gas'
+Plug 'plasticboy/vim-markdown'
+Plug 'suan/vim-instant-markdown'
+Plug 'arakashic/chromatica.nvim'
+
+" Application Plugins
+Plug 'ledger/vim-ledger'
 Plug 'blindFS/vim-taskwarrior'
-Plug 'Yggdroot/indentLine'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
-" Plug 'vivien/vim-linux-coding-style'
+Plug 'lervag/vimtex'
 
 
 " Add plugins to &runtimepath
@@ -280,6 +287,7 @@ let g:indentLine_char = '│'
 
 " Vim Pandoc
 let g:pandoc#after#modules#enabled = ["ultisnips"]
+
 
 
 " " TagList
