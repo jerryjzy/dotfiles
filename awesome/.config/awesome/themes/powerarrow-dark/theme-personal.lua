@@ -1,9 +1,9 @@
 
 --[[
-                                      
-     Powerarrow Dark Awesome WM theme 
-     github.com/copycat-killer        
-                                      
+
+     Powerarrow Dark Awesome WM theme
+     github.com/copycat-killer
+
 --]]
 
 local gears = require("gears")
@@ -199,11 +199,12 @@ theme.fs = lain.widget.fs({
     end
 })
 
--- Battery
+-- Internal Battery
 local baticon = wibox.widget.imagebox(theme.widget_battery)
 local bat = lain.widget.bat({
+    batteries = {"BAT0", "BAT1"},
     settings = function()
-        if bat_now.status ~= "N/A" then
+        if bat_now.n_status[1] ~= "N/A" then
             if bat_now.ac_status == 1 then
                 widget:set_markup(markup.font(theme.font, " AC "))
                 baticon:set_image(theme.widget_ac)
@@ -215,10 +216,35 @@ local bat = lain.widget.bat({
             else
                 baticon:set_image(theme.widget_battery)
             end
-            widget:set_markup(markup.font(theme.font, " " .. bat_now.perc .. "% "))
+            widget:set_markup(markup.font(theme.font, " " .. bat_now.n_perc[1] .. "% "))
         else
             widget:set_markup(markup.font(theme.font, " AC "))
             baticon:set_image(theme.widget_ac)
+        end
+    end
+})
+
+-- External Battery
+local baticon_ext = wibox.widget.imagebox(theme.widget_battery)
+local bat_ext = lain.widget.bat({
+    batteries = {"BAT0", "BAT1"},
+    settings = function()
+        if bat_now.n_status[2] ~= "N/A" then
+            if bat_now.ac_status == 1 then
+                widget:set_markup(markup.font(theme.font, " AC "))
+                baticon_ext:set_image(theme.widget_ac)
+                return
+            elseif not bat_now.perc and tonumber(bat_now.perc) <= 5 then
+                baticon_ext:set_image(theme.widget_battery_empty)
+            elseif not bat_now.perc and tonumber(bat_now.perc) <= 15 then
+                baticon_ext:set_image(theme.widget_battery_low)
+            else
+                baticon_ext:set_image(theme.widget_battery)
+            end
+            widget:set_markup(markup.font(theme.font, " " .. bat_now.n_perc[2] .. "% "))
+        else
+            widget:set_markup(markup.font(theme.font, " N/A"))
+            baticon_ext:set_image(theme.widget_ac)
         end
     end
 })
@@ -342,6 +368,8 @@ function theme.at_screen_connect(s)
             arrl_ld,
             wibox.container.background(baticon, theme.bg_focus),
             wibox.container.background(bat.widget, theme.bg_focus),
+            wibox.container.background(baticon_ext, theme.bg_focus),
+            wibox.container.background(bat_ext.widget, theme.bg_focus),
             arrl_dl,
             clock,
             spr,

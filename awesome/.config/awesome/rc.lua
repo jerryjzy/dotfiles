@@ -57,27 +57,25 @@ local function run_once(cmd_arr)
 end
 
 run_once({  "compton",
-            "fcitx",
+            -- "fcitx",
             "nm-applet",
             "redshift-gtk",
             "xmodmap /home/jerryjzy/.Xmodmap",
-            "devmon",
-            "conky",
-            "xscreensaver -no-splash",
-            "unclutter",
-            "/home/jerryjzy/script/hdmi.sh",
+            "xcape -e 'Control_L=Escape'",
+            "devmon"
+            -- "/home/jerryjzy/script/hdmi.sh",
         })
 
 -- }}}
 
 -- {{{ Variable definitions
 local chosen_theme = "powerarrow-dark"
-local modkey       = "Mod4"
-local altkey       = "Mod1"
+local modkey       = "Mod1"
+local altkey       = "Mod4"
 local terminal     = "termite"
 local editor       = os.getenv("EDITOR") or "nvim"
 local gui_editor   = "gvim"
-local browser      = "google-chrome-stable"
+local browser      = "firejail google-chrome-stable"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }
@@ -324,8 +322,10 @@ globalkeys = awful.util.table.join(
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, "Shift"   }, "e", awesome.quit,
-              {description = "quit awesome", group = "awesome"}),
+    -- awful.key({ modkey, "Shift"   }, "e", awesome.quit,
+    --           {description = "quit awesome", group = "awesome"}),
+
+    awful.key({ modkey, "Control" }, "e", function () awful.util.spawn("oblogout", false) end),
 
     awful.key({ altkey, "Shift"   }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
@@ -362,6 +362,12 @@ globalkeys = awful.util.table.join(
     awful.key({ altkey, }, "c", function () lain.widget.calendar.show(7) end),
     awful.key({ altkey, }, "h", function () if beautiful.fs then beautiful.fs.show(7) end end),
     awful.key({ altkey, }, "w", function () if beautiful.weather then beautiful.weather.show(7) end end),
+
+    -- Screenshot
+    awful.key({ altkey, }, "Print",
+        function ()
+            awful.spawn.with_shell("maim -s ~/Pictures/screenshot_$(date +%s).png")
+        end),
 
     -- ALSA volume control
     awful.key({}, "XF86AudioRaiseVolume",
@@ -457,6 +463,12 @@ globalkeys = awful.util.table.join(
             awful.util.spawn_with_shell("kbdlight down 5")
         end),
 
+    -- Trigger hdmi monitor script
+    awful.key({}, "XF86Display",
+        function ()
+            awful.util.spawn_with_shell("/home/jerryjzy/Scripts/hdmi.sh")
+        end),
+
 
     -- Copy primary to clipboard (terminals to gtk)
     awful.key({ modkey }, "c", function () awful.spawn("xsel | xsel -i -b") end),
@@ -489,7 +501,7 @@ globalkeys = awful.util.table.join(
     --
     -- dmenu
     awful.key({ modkey }, "d", function ()
-        awful.util.spawn(string.format("dmenu_run -i -fn 'terminus-10' -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
+        awful.util.spawn(string.format("dmenu_run -i -fn 'terminus-12' -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
         beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
         end),
     --

@@ -49,11 +49,11 @@ Plug 'Cognoscan/vim-vhdl'
 Plug 'Shirk/vim-gas'
 Plug 'plasticboy/vim-markdown'
 Plug 'suan/vim-instant-markdown'
-Plug 'arakashic/chromatica.nvim'
+" Plug 'arakashic/chromatica.nvim'
 
 " Application Plugins
-Plug 'ledger/vim-ledger'
-Plug 'blindFS/vim-taskwarrior'
+" Plug 'ledger/vim-ledger'
+" Plug 'blindFS/vim-taskwarrior'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
@@ -279,8 +279,8 @@ let g:vim_markdown_math = 1
 " }}}
 
 " Chromatica.nvim
-let g:chromatica#libclang_path="/usr/lib/libclang.so"
-let g:chromatica#enable_at_startup=1
+" let g:chromatica#libclang_path="/usr/lib/libclang.so"
+" let g:chromatica#enable_at_startup=1
 
 " Vim Indent Guide
 let g:indentLine_char = '│'

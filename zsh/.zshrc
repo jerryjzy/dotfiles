@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh installation.
 
-export ZSH=/home/jerryjzy/.config/oh-my-zsh
+# export ZSH=/usr/share/oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -58,9 +58,11 @@ BASE16_SHELL="$HOME/.config/base16-shell/base16-eighties.dark.sh"
 plugins=(git zsh-syntax-highlighting colored-man-pages)
 
 # User configuration
-
+#
+[ "$XDG_CURRENT_DESKTOP" = "KDE" ] || [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] || export QT_QPA_PLATFORMTHEME="qt5ct"
 export PATH=/opt/mpich/bin/:$HOME/bin:/usr/local/bin:$HOME/script:$PATH
 export SUDO_EDITOR=nvim
+export LM_LICENSE_FILE=2525@sparky.ece.mcgill.ca
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
