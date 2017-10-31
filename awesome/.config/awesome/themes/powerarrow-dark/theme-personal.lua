@@ -15,16 +15,18 @@ local os    = { getenv = os.getenv }
 local theme                                     = {}
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-dark"
 theme.wallpaper                                 = theme.dir .. "/wall.png"
-theme.font                                      = "xos4 Terminus 12"
+-- theme.font                                      = "xos4 Terminus 12"
+theme.font                                      = "Iosevka Term 12"
 theme.fg_normal                                 = "#DDDDFF"
-theme.fg_focus                                  = "#EA6F81"
-theme.fg_urgent                                 = "#CC9393"
+theme.fg_focus                                  = "#4F9F7F"
+-- theme.fg_focus                                  = "#EA6F81"
+theme.fg_urgent                                 = "#DD9393"
 theme.bg_normal                                 = "#1A1A1A"
 theme.bg_focus                                  = "#313131"
-theme.bg_urgent                                 = "#1A1A1A"
-theme.border_width                              = 1
+theme.bg_urgent                                 = "#5A1A1A"
+theme.border_width                              = 2
 theme.border_normal                             = "#3F3F3F"
-theme.border_focus                              = "#7F7F7F"
+theme.border_focus                              = "#4F9F7F"
 theme.border_marked                             = "#CC9393"
 theme.tasklist_bg_focus                         = "#1A1A1A"
 theme.titlebar_bg_focus                         = theme.bg_focus
@@ -66,7 +68,7 @@ theme.widget_mail                               = theme.dir .. "/icons/mail.png"
 theme.widget_mail_on                            = theme.dir .. "/icons/mail_on.png"
 theme.tasklist_plain_task_name                  = true
 theme.tasklist_disable_icon                     = true
-theme.useless_gap                               = 0
+theme.useless_gap                               = 2
 theme.titlebar_close_button_focus               = theme.dir .. "/icons/titlebar/close_focus.png"
 theme.titlebar_close_button_normal              = theme.dir .. "/icons/titlebar/close_normal.png"
 theme.titlebar_ontop_button_focus_active        = theme.dir .. "/icons/titlebar/ontop_focus_active.png"
@@ -92,7 +94,7 @@ local separators = lain.util.separators
 -- Textclock
 local clockicon = wibox.widget.imagebox(theme.widget_clock)
 local clock = awful.widget.watch(
-    "date +'%a %d %b %R'", 60,
+    "date +'%a - %b %d - %R'", 60,
     function(widget, stdout)
         widget:set_markup(" " .. markup.font(theme.font, stdout))
     end
@@ -249,23 +251,38 @@ local bat_ext = lain.widget.bat({
     end
 })
 
--- ALSA volume
+-- PulseAudio volume (based on multicolor theme)
 local volicon = wibox.widget.imagebox(theme.widget_vol)
-theme.volume = lain.widget.alsa({
+theme.volume = lain.widget.pulse {
     settings = function()
-        if volume_now.status == "off" then
+        vlevel = volume_now.left .. "-" .. volume_now.right .. "%   " .. volume_now.device
+        if volume_now.muted == "yes" then
             volicon:set_image(theme.widget_vol_mute)
-        elseif tonumber(volume_now.level) == 0 then
-            volicon:set_image(theme.widget_vol_no)
-        elseif tonumber(volume_now.level) <= 50 then
-            volicon:set_image(theme.widget_vol_low)
+            vlevel = vlevel .. " M "
         else
             volicon:set_image(theme.widget_vol)
         end
-
-        widget:set_markup(markup.font(theme.font, " " .. volume_now.level .. "% "))
+        widget:set_markup(markup.font(theme.font, " " .. vlevel))
     end
-})
+}
+
+-- ALSA volume
+-- local volicon = wibox.widget.imagebox(theme.widget_vol)
+-- theme.volume = lain.widget.alsa({
+--     settings = function()
+--         if volume_now.status == "off" then
+--             volicon:set_image(theme.widget_vol_mute)
+--         elseif tonumber(volume_now.level) == 0 then
+--             volicon:set_image(theme.widget_vol_no)
+--         elseif tonumber(volume_now.level) <= 50 then
+--             volicon:set_image(theme.widget_vol_low)
+--         else
+--             volicon:set_image(theme.widget_vol)
+--         end
+
+--         widget:set_markup(markup.font(theme.font, " " .. volume_now.level .. "% "))
+--     end
+-- })
 
 -- Net
 local neticon = wibox.widget.imagebox(theme.widget_net)
@@ -293,7 +310,7 @@ local arrl_ld = separators.arrow_left("alpha", theme.bg_focus)
 
 function theme.at_screen_connect(s)
     -- Quake application
-    s.quake = lain.util.quake({ app = awful.util.terminal })
+    s.quake = lain.util.quake({ app = awful.util.terminal ,argname = "--name %s"})
 
     -- If wallpaper is a function, call it with the screen
     local wallpaper = theme.wallpaper

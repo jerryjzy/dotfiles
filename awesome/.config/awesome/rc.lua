@@ -20,6 +20,9 @@ local lain          = require("lain")
 --local menubar       = require("menubar")
 local freedesktop   = require("freedesktop")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+require("awful.remote")
+require("screenful")
+
 -- }}}
 
 -- {{{ Error handling
@@ -369,47 +372,87 @@ globalkeys = awful.util.table.join(
             awful.spawn.with_shell("maim -s ~/Pictures/screenshot_$(date +%s).png")
         end),
 
-    -- ALSA volume control
-    awful.key({}, "XF86AudioRaiseVolume",
-        function ()
-            os.execute(string.format("amixer set %s 1%%+", beautiful.volume.channel))
-            beautiful.volume.update()
-        end),
-    awful.key({}, "XF86AudioLowerVolume",
-        function ()
-            os.execute(string.format("amixer set %s 1%%-", beautiful.volume.channel))
-            beautiful.volume.update()
-        end),
-    awful.key({}, "XF86AudioMute",
-        function ()
-            os.execute(string.format("amixer set %s toggle", beautiful.volume.channel))
-            beautiful.volume.update()
-        end),
+    -- PulseAudio volume control
     awful.key({ altkey }, "Up",
         function ()
-            os.execute(string.format("amixer -q set %s 1%%+", beautiful.volume.channel))
+            -- os.execute(string.format("pactl set-sink-volume %d +1%%", beautiful.volume.device))
+            os.execute("amixer -q -D pulse sset Master 5%+")
             beautiful.volume.update()
         end),
     awful.key({ altkey }, "Down",
         function ()
-            os.execute(string.format("amixer -q set %s 1%%-", beautiful.volume.channel))
+            -- os.execute(string.format("pactl set-sink-volume %d -1%%", beautiful.volume.device))
+            os.execute("amixer -q -D pulse sset Master 5%-")
             beautiful.volume.update()
         end),
     awful.key({ altkey }, "m",
         function ()
-            os.execute(string.format("amixer -q set %s toggle", beautiful.volume.togglechannel or beautiful.volume.channel))
+            -- os.execute(string.format("pactl set-sink-mute %d toggle", beautiful.volume.device))
+            os.execute("amixer -D pulse set Master 1+ toggle")
             beautiful.volume.update()
         end),
-    awful.key({ altkey, "Control" }, "m",
+
+    awful.key({}, "XF86AudioRaiseVolume",
         function ()
-            os.execute(string.format("amixer -q set %s 100%%", beautiful.volume.channel))
+            -- os.execute(string.format("pactl set-sink-volume %d +1%%", beautiful.volume.device))
+            os.execute("amixer -q -D pulse sset Master 5%+")
             beautiful.volume.update()
         end),
-    awful.key({ altkey, "Control" }, "0",
+    awful.key({}, "XF86AudioLowerVolume",
         function ()
-            os.execute(string.format("amixer -q set %s 0%%", beautiful.volume.channel))
+            -- os.execute(string.format("pactl set-sink-volume %d -1%%", beautiful.volume.device))
+            os.execute("amixer -q -D pulse sset Master 5%-")
             beautiful.volume.update()
         end),
+    awful.key({}, "XF86AudioMute",
+        function ()
+            -- os.execute(string.format("pactl set-sink-mute %d toggle", beautiful.volume.device))
+            os.execute("amixer -D pulse set Master 1+ toggle")
+            beautiful.volume.update()
+        end),
+
+
+    -- ALSA volume control
+    -- awful.key({}, "XF86AudioRaiseVolume",
+    --     function ()
+    --         os.execute(string.format("amixer set %s 1%%+", beautiful.volume.channel))
+    --         beautiful.volume.update()
+    --     end),
+    -- awful.key({}, "XF86AudioLowerVolume",
+    --     function ()
+    --         os.execute(string.format("amixer set %s 1%%-", beautiful.volume.channel))
+    --         beautiful.volume.update()
+    --     end),
+    -- awful.key({}, "XF86AudioMute",
+    --     function ()
+    --         os.execute(string.format("amixer set %s toggle", beautiful.volume.channel))
+    --         beautiful.volume.update()
+    --     end),
+    -- awful.key({ altkey }, "Up",
+    --     function ()
+    --         os.execute(string.format("amixer -q set %s 1%%+", beautiful.volume.channel))
+    --         beautiful.volume.update()
+    --     end),
+    -- awful.key({ altkey }, "Down",
+    --     function ()
+    --         os.execute(string.format("amixer -q set %s 1%%-", beautiful.volume.channel))
+    --         beautiful.volume.update()
+    --     end),
+    -- awful.key({ altkey }, "m",
+    --     function ()
+    --         os.execute(string.format("amixer -q set %s toggle", beautiful.volume.togglechannel or beautiful.volume.channel))
+    --         beautiful.volume.update()
+    --     end),
+    -- awful.key({ altkey, "Control" }, "m",
+    --     function ()
+    --         os.execute(string.format("amixer -q set %s 100%%", beautiful.volume.channel))
+    --         beautiful.volume.update()
+    --     end),
+    -- awful.key({ altkey, "Control" }, "0",
+    --     function ()
+    --         os.execute(string.format("amixer -q set %s 0%%", beautiful.volume.channel))
+    --         beautiful.volume.update()
+    --     end),
 
     -- MPD control
     awful.key({}, "XF86AudioPause",
@@ -633,7 +676,7 @@ awful.rules.rules = {
 
     -- Titlebars
     { rule_any = { type = { "dialog", "normal" } },
-      properties = { titlebars_enabled = true } },
+      properties = { titlebars_enabled = false } },
 
     -- Set Firefox to always map on the first tag on screen 1.
     { rule = { class = "Firefox" },

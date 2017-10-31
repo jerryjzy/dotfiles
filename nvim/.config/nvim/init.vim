@@ -13,12 +13,12 @@ Plug 'godlygeek/tabular'
 Plug 'neomake/neomake'
 Plug 'junegunn/vim-easy-align'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
 
 " Git
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/vim-github-dashboard'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'airblade/vim-gitgutter'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Visual Plugins
 Plug 'morhetz/gruvbox'
@@ -26,10 +26,11 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'janko-m/vim-test'
 Plug 'ryanoasis/vim-devicons'
-Plug 'Yggdroot/indentLine'
-
+" Plug 'Yggdroot/indentLine'
+Plug 'mhinz/vim-startify'
 " Utility Plugins
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'easymotion/vim-easymotion'
 " Plug 'Raimondi/delimitMate'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
@@ -48,17 +49,16 @@ Plug 'zchee/deoplete-jedi'
 Plug 'Cognoscan/vim-vhdl'
 Plug 'Shirk/vim-gas'
 Plug 'plasticboy/vim-markdown'
+Plug 'vim-scripts/VHDL-indent-93-syntax'
 Plug 'suan/vim-instant-markdown'
+Plug 'suoto/vim-hdl'
 " Plug 'arakashic/chromatica.nvim'
 
 " Application Plugins
-" Plug 'ledger/vim-ledger'
-" Plug 'blindFS/vim-taskwarrior'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'lervag/vimtex'
-
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -230,9 +230,9 @@ endif
 " Plugin Settings --------------------------------------------------{{{
 
 " NERDTree
-nmap <leader>n :NERDTreeToggle<CR>
-let NERDTreeHighlightCursorline=1
-let NERDTreeIgnore = ['tmp', '.yardoc', 'pkg']
+" nmap <leader>n :NERDTreeToggle<CR>
+" let NERDTreeHighlightCursorline=1
+" let NERDTreeIgnore = ['tmp', '.yardoc', 'pkg']
 
 " CtrlP
 nnoremap <Leader>o :CtrlP<CR>
@@ -263,8 +263,8 @@ inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<tab>"
 " Airline
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
-" let g:airline_left_sep=' '
-" let g:airline_right_sep=' '
+let g:airline_left_sep=' '
+let g:airline_right_sep=' '
 let g:airline_theme='gruvbox'
 
 " vim-commentary
@@ -287,6 +287,22 @@ let g:indentLine_char = '│'
 
 " Vim Pandoc
 let g:pandoc#after#modules#enabled = ["ultisnips"]
+
+" Easymotion
+" <Leader>f{char} to move to {char}
+map  f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 
 
