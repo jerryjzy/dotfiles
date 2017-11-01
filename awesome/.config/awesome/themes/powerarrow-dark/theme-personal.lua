@@ -253,18 +253,48 @@ local bat_ext = lain.widget.bat({
 
 -- PulseAudio volume (based on multicolor theme)
 local volicon = wibox.widget.imagebox(theme.widget_vol)
-theme.volume = lain.widget.pulse {
-    settings = function()
-        vlevel = volume_now.left .. "-" .. volume_now.right .. "%   " .. volume_now.device
-        if volume_now.muted == "yes" then
-            volicon:set_image(theme.widget_vol_mute)
-            vlevel = vlevel .. " M "
-        else
-            volicon:set_image(theme.widget_vol)
-        end
-        widget:set_markup(markup.font(theme.font, " " .. vlevel))
-    end
+
+local voldevice = wibox.widget{
+    markup = 'N/A',
+    align  = 'center',
+    valign = 'center',
+    widget = wibox.widget.textbox,
 }
+
+theme.volume = lain.widget.pulsebar({
+    width = 120,
+    colors = {
+        background = theme.bg_focus,
+        mute = theme.fg_urgent,
+        unmute = theme.fg_focus
+    },
+    settings = function()
+        voldevice:set_markup(volume_now.device)
+    end
+})
+
+
+local pawidget = wibox.widget {
+    theme.volume.bar,
+    voldevice,
+    layout = wibox.layout.flex.vertical
+}
+
+-- PulseAudio volume (based on multicolor theme)
+-- local volicon = wibox.widget.imagebox(theme.widget_vol)
+-- theme.volume2 = lain.widget.pulse({
+--     settings = function()
+--         vlevel = volume_now.left .. "-" .. volume_now.right .. "%   " .. volume_now.device
+--         if volume_now.muted == "yes" then
+--             volicon:set_image(theme.widget_vol_mute)
+--             vlevel = vlevel .. " M "
+--         else
+--             volicon:set_image(theme.widget_vol)
+--         end
+--         widget:set_markup(markup.font(theme.font, " " .. vlevel))
+--     end
+-- })
+
 
 -- ALSA volume
 -- local volicon = wibox.widget.imagebox(theme.widget_vol)
@@ -381,7 +411,8 @@ function theme.at_screen_connect(s)
             -- fcitx,
             arrl_dl,
             volicon,
-            theme.volume.widget,
+            -- theme.volume.bar,
+            pawidget,
             arrl_ld,
             wibox.container.background(baticon, theme.bg_focus),
             wibox.container.background(bat.widget, theme.bg_focus),

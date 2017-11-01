@@ -78,7 +78,7 @@ local altkey       = "Mod4"
 local terminal     = "termite"
 local editor       = os.getenv("EDITOR") or "nvim"
 local gui_editor   = "gvim"
-local browser      = "firejail google-chrome-stable"
+local browser      = "firejail firefox"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }
@@ -377,82 +377,40 @@ globalkeys = awful.util.table.join(
         function ()
             -- os.execute(string.format("pactl set-sink-volume %d +1%%", beautiful.volume.device))
             os.execute("amixer -q -D pulse sset Master 5%+")
-            beautiful.volume.update()
+            beautiful.volume.notify()
         end),
     awful.key({ altkey }, "Down",
         function ()
             -- os.execute(string.format("pactl set-sink-volume %d -1%%", beautiful.volume.device))
             os.execute("amixer -q -D pulse sset Master 5%-")
-            beautiful.volume.update()
+            beautiful.volume.notify()
         end),
     awful.key({ altkey }, "m",
         function ()
             -- os.execute(string.format("pactl set-sink-mute %d toggle", beautiful.volume.device))
             os.execute("amixer -D pulse set Master 1+ toggle")
-            beautiful.volume.update()
+            beautiful.volume.notify()
         end),
 
     awful.key({}, "XF86AudioRaiseVolume",
         function ()
             -- os.execute(string.format("pactl set-sink-volume %d +1%%", beautiful.volume.device))
             os.execute("amixer -q -D pulse sset Master 5%+")
-            beautiful.volume.update()
+            beautiful.volume.notify()
         end),
     awful.key({}, "XF86AudioLowerVolume",
         function ()
             -- os.execute(string.format("pactl set-sink-volume %d -1%%", beautiful.volume.device))
             os.execute("amixer -q -D pulse sset Master 5%-")
-            beautiful.volume.update()
+            beautiful.volume.notify()
         end),
     awful.key({}, "XF86AudioMute",
         function ()
             -- os.execute(string.format("pactl set-sink-mute %d toggle", beautiful.volume.device))
             os.execute("amixer -D pulse set Master 1+ toggle")
-            beautiful.volume.update()
+            beautiful.volume.notify()
         end),
 
-
-    -- ALSA volume control
-    -- awful.key({}, "XF86AudioRaiseVolume",
-    --     function ()
-    --         os.execute(string.format("amixer set %s 1%%+", beautiful.volume.channel))
-    --         beautiful.volume.update()
-    --     end),
-    -- awful.key({}, "XF86AudioLowerVolume",
-    --     function ()
-    --         os.execute(string.format("amixer set %s 1%%-", beautiful.volume.channel))
-    --         beautiful.volume.update()
-    --     end),
-    -- awful.key({}, "XF86AudioMute",
-    --     function ()
-    --         os.execute(string.format("amixer set %s toggle", beautiful.volume.channel))
-    --         beautiful.volume.update()
-    --     end),
-    -- awful.key({ altkey }, "Up",
-    --     function ()
-    --         os.execute(string.format("amixer -q set %s 1%%+", beautiful.volume.channel))
-    --         beautiful.volume.update()
-    --     end),
-    -- awful.key({ altkey }, "Down",
-    --     function ()
-    --         os.execute(string.format("amixer -q set %s 1%%-", beautiful.volume.channel))
-    --         beautiful.volume.update()
-    --     end),
-    -- awful.key({ altkey }, "m",
-    --     function ()
-    --         os.execute(string.format("amixer -q set %s toggle", beautiful.volume.togglechannel or beautiful.volume.channel))
-    --         beautiful.volume.update()
-    --     end),
-    -- awful.key({ altkey, "Control" }, "m",
-    --     function ()
-    --         os.execute(string.format("amixer -q set %s 100%%", beautiful.volume.channel))
-    --         beautiful.volume.update()
-    --     end),
-    -- awful.key({ altkey, "Control" }, "0",
-    --     function ()
-    --         os.execute(string.format("amixer -q set %s 0%%", beautiful.volume.channel))
-    --         beautiful.volume.update()
-    --     end),
 
     -- MPD control
     awful.key({}, "XF86AudioPause",
