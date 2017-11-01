@@ -17,6 +17,7 @@ local wibox         = require("wibox")
 local beautiful     = require("beautiful")
 local naughty       = require("naughty")
 local lain          = require("lain")
+local helpers       = require("lain.helpers")
 --local menubar       = require("menubar")
 local freedesktop   = require("freedesktop")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
@@ -62,6 +63,7 @@ end
 run_once({  "compton",
             -- "fcitx",
             "nm-applet",
+            "blueman-applet",
             "redshift-gtk",
             "xmodmap /home/jerryjzy/.Xmodmap",
             "xcape -e 'Control_L=Escape'",
@@ -78,7 +80,7 @@ local altkey       = "Mod4"
 local terminal     = "termite"
 local editor       = os.getenv("EDITOR") or "nvim"
 local gui_editor   = "gvim"
-local browser      = "firejail firefox"
+local browser      = "firejail google-chrome-stable"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }
@@ -88,7 +90,7 @@ awful.layout.layouts = {
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
-    --awful.layout.suit.fair,
+    awful.layout.suit.fair,
     --awful.layout.suit.fair.horizontal,
     --awful.layout.suit.spiral,
     --awful.layout.suit.spiral.dwindle,
@@ -211,6 +213,39 @@ end)
 -- Create a wibox for each screen and add it
 awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
 -- }}}
+
+-- {{{ Screen bightness notify
+
+local notifybright;
+local preset = {}
+preset.font = beautiful.font
+function notifybrightness()
+    helpers.async("xbacklight -get", function(bness)
+        -- local preset = {}
+        local bright = tonumber(bness)
+        preset.title = string.format("Screen Brightness")
+
+        int = math.modf((bright / 100) * awful.screen.focused().mywibox.height)
+        preset.text = string.format("[%s%s]", string.rep("|", int),
+                      string.rep(" ", awful.screen.focused().mywibox.height - int))
+
+        -- if alsabar.followtag then preset.screen = awful.screen.focused() end
+
+        if not notifybright then
+            notifybright = naughty.notify {
+                preset  = preset,
+                destroy = function() notifybright = nil end
+            }
+        else
+            naughty.replace_text(notifybright, preset.title, preset.text)
+        end
+    end)
+end
+
+
+
+-- }}}
+
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
@@ -450,26 +485,27 @@ globalkeys = awful.util.table.join(
     awful.key({}, "XF86MonBrightnessUp",
         function ()
             awful.util.spawn_with_shell("xbacklight + 5")
+            notifybrightness()
         end),
     awful.key({}, "XF86MonBrightnessDown",
         function ()
             awful.util.spawn_with_shell("xbacklight - 5")
+            notifybrightness()
         end),
-    awful.key({}, "XF86KbdBrightnessUp",
-        function ()
-            awful.util.spawn_with_shell("kbdlight up 5")
-        end),
-    awful.key({}, "XF86KbdBrightnessDown",
-        function ()
-            awful.util.spawn_with_shell("kbdlight down 5")
-        end),
+    -- awful.key({}, "XF86KbdBrightnessUp",
+    --     function ()
+    --         awful.util.spawn_with_shell("kbdlight up 5")
+    --     end),
+    -- awful.key({}, "XF86KbdBrightnessDown",
+    --     function ()
+    --         awful.util.spawn_with_shell("kbdlight down 5")
+    --     end),
 
     -- Trigger hdmi monitor script
     awful.key({}, "XF86Display",
         function ()
             awful.util.spawn_with_shell("/home/jerryjzy/Scripts/hdmi.sh")
         end),
-
 
     -- Copy primary to clipboard (terminals to gtk)
     awful.key({ modkey }, "c", function () awful.spawn("xsel | xsel -i -b") end),
@@ -502,8 +538,8 @@ globalkeys = awful.util.table.join(
     --
     -- dmenu
     awful.key({ modkey }, "d", function ()
-        awful.util.spawn(string.format("dmenu_run -i -fn 'terminus-12' -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
-        beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
+        awful.util.spawn(string.format("dmenu_run -i -fn 'iosevka term-12' -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
+        beautiful.bg_normal, beautiful.fg_normal, beautiful.fg_focus, beautiful.fg_normal))
         end),
     --
     -- Prompt

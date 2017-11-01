@@ -1,6 +1,0 @@
-pane	0	1	:..FF/archbackup	1	:*	1	:/Volumes/STUFF/archbackup	1	zsh	:
-pane	0	1	:..FF/archbackup	1	:*	2	:/Volumes/STUFF/archbackup	0	nvim	:nvim /Users/jerryjzy/.zshrc
-pane	1	1	:zsh	1	:*	1	:/Users/jerryjzy	1	zsh	:
-window	0	1	1	:*	d0f8,238x58,0,0{119x58,0,0,0,118x58,120,0,2}
-window	1	1	1	:*	b261,80x24,0,0,4
-state	1	
