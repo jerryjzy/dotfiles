@@ -22,20 +22,22 @@ theme.wallpaper                                 = theme.dir .. "/wall.png"
 -- theme.font                                      = "xos4 Terminus 12"
 theme.font                                      = "Iosevka Term 12"
 theme.fg_normal                                 = "#DDDDFF"
-theme.fg_focus                                  = "#4F9F7F"
+theme.fg_focus                                  = "#20577A"
+-- theme.fg_focus                                  = "#4F9F7F"
 -- theme.fg_focus                                  = "#EA6F81"
 theme.fg_urgent                                 = "#DD9393"
 theme.bg_normal                                 = "#1A1A1A"
 theme.bg_focus                                  = "#414141"
 theme.bg_urgent                                 = "#5A1A1A"
-theme.border_width                              = 2
+theme.border_width                              = 3
 theme.border_normal                             = "#3F3F3F"
-theme.border_focus                              = "#4F9F7F"
+theme.border_focus                              = theme.fg_focus
 theme.border_marked                             = "#CC9393"
 theme.wibar_border_width                        = 4
 theme.wibar_opacity                             = .9
 theme.wibar_border_color                        = theme.bg_normal
-theme.tasklist_bg_focus                         = "#1A1A1A"
+theme.tasklist_bg_focus                         = theme.bg_normal
+theme.tasklist_fg_focus                         = theme.fg_focus
 theme.tasklist_shape                            = gears.shape.octogon
 theme.tasklist_shape_border_width               = 1
 theme.tasklist_spacing                          = 2
@@ -44,7 +46,7 @@ theme.tasklist_shape_border_color               = theme.bg_focus
 theme.tasklist_shape_border_color_focus         = theme.fg_focus
 theme.tasklist_plain_task_name                  = true
 theme.tasklist_disable_icon                     = true
-theme.titlebar_bg_focus                         = theme.bg_normal
+theme.titlebar_bg_focus                         = theme.fg_focus
 theme.titlebar_bg_normal                        = theme.bg_normal
 theme.titlebar_fg_focus                         = theme.fg_focus
 theme.menu_height                               = 20
@@ -54,6 +56,8 @@ theme.taglist_squares_sel                       = theme.dir .. "/icons/square_se
 theme.taglist_squares_unsel                     = theme.dir .. "/icons/square_unsel.png"
 theme.taglist_shape_border_width               = 1
 theme.taglist_shape_border_width_focus         = 2
+theme.taglist_fg_focus                         = theme.fg_normal
+theme.taglist_bg_focus                         = theme.fg_focus
 theme.taglist_shape_border_color               = theme.bg_focus
 theme.taglist_shape_border_color_focus         = theme.fg_focus
 -- theme.notification_margin                      = 50
@@ -117,11 +121,11 @@ local clockicon = wibox.widget.imagebox(theme.widget_clock)
 local clock = awful.widget.watch(
     "date +' %a %b %d %R '", 60,
     function(widget, stdout)
-        widget:set_markup(" " .. markup.font("Iosevka Term Bold 12", markup("#4F9F7F", stdout)))
+        widget:set_markup(" " .. markup.font("Iosevka Term Bold 12", markup(theme.fg_normal, stdout)))
     end
 )
 
-local clockwidget = wibox.container.background(clock, theme.bg_focus)
+local clockwidget = wibox.container.background(clock, theme.fg_focus)
 
 -- Calendar
 -- theme.cal = lain.widget.calendar({

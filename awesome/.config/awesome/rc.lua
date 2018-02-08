@@ -688,14 +688,14 @@ awful.rules.rules = {
 
     -- Titlebars
     { rule_any = { type = { "dialog", "normal" } },
-      properties = { titlebars_enabled = true} },
+      properties = { titlebars_enabled = false} },
 
     -- Set Firefox to always map on the first tag on screen 1.
     { rule = { class = "Firefox" },
       properties = { screen = 1, tag = screen[1].tags[1] } },
 
-    { rule = { class = "Gimp", role = "gimp-image-window" },
-          properties = { maximized = true } },
+    -- { rule = { class = "Gimp", role = "gimp-image-window" },
+    --       properties = { maximized = true } },
 
     -- OBlogout full screen
     { rule = { class = "Oblogout" },
