@@ -22,6 +22,7 @@ Plug 'airblade/vim-gitgutter'
 
 " Visual Plugins
 Plug 'morhetz/gruvbox'
+Plug 'altercation/vim-colors-solarized'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'janko-m/vim-test'
@@ -31,10 +32,12 @@ Plug 'mhinz/vim-startify'
 " Utility Plugins
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
+Plug 'pelodelfuego/vim-swoop'
 " Plug 'Raimondi/delimitMate'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'dhruvasagar/vim-table-mode'
 
 " Completion Plugins
 function! DoRemote(arg)
@@ -48,10 +51,15 @@ Plug 'tweekmonster/deoplete-clang2'
 Plug 'zchee/deoplete-jedi'
 Plug 'Cognoscan/vim-vhdl'
 Plug 'Shirk/vim-gas'
+Plug 'ARM9/arm-syntax-vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'vim-scripts/VHDL-indent-93-syntax'
 Plug 'suan/vim-instant-markdown'
 Plug 'suoto/vim-hdl'
+Plug 'wmvanvliet/vim-ipython'
+Plug 'jmcantrell/vim-virtualenv'
+" Plug 'bfredl/nvim-ipy'
+" Plug 'julienr/vim-cellmode'
 " Plug 'arakashic/chromatica.nvim'
 
 " Application Plugins
@@ -101,9 +109,9 @@ set clipboard+=unnamedplus
 set synmaxcol=128
 set encoding=utf-8
 set nowrap
-set nowritebackup
-set noswapfile
-set nobackup
+" set nowritebackup
+" set noswapfile
+" set nobackup
 set hlsearch
 set ignorecase
 set smartcase
@@ -149,7 +157,8 @@ highlight colorcolumn ctermbg=236
 
 " automatic setup for assembly
 au BufRead,BufNewFile *.asm set ft=asm8051
-au BufRead,BufNewFile *.s set ft=gas
+" au BufRead,BufNewFile *.s set ft=gas
+au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
 
 " let g:python_host_prog = '/usr/bin/python'
 
@@ -243,15 +252,11 @@ let g:ctrlp_working_path_mode=2
 let g:ctrlp_by_filename=1
 let g:ctrlp_max_files=600
 let g:ctrlp_max_depth=5
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.o
 
 " vimtex
 let g:vimtex_view_general_viewer="zathura"
 let g:vimtex_latexmk_build_dir="./.build/"
-
-" Ultisnips
-let g:UltiSnipsExpandTrigger="<s-tab>"
-" let g:UltiSnipsJumpForwardTrigger="<tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " deoplete.nvim
 let g:deoplete#enable_at_startup=1
@@ -259,6 +264,14 @@ let g:deoplete#sources#clang#libclang_path="/usr/lib/libclang.so"
 let g:deoplete#sources#clang#clang_header="/usr/lib/clang"
 inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
 inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<tab>"
+
+" Ultisnips
+" let g:UltiSnipsExpandTrigger="<s-tab>"
+let g:UltiSnipsUsePythonVersion = 3
+let g:ultisnips_python_style="google"
+let g:UltiSnipsExpandTrigger="<s-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " Airline
 let g:airline_powerline_fonts=1
@@ -304,10 +317,52 @@ nmap <Leader>L <Plug>(easymotion-overwin-line)
 map  <Leader>w <Plug>(easymotion-bd-w)
 nmap <Leader>w <Plug>(easymotion-overwin-w)
 
+" Neomake
+" let g:neomake_vhdl_enabled_makers = [{
+"     \ 'name': 'ghdl',
+"     \ 'append_file' : 1,
+"     \ 'args': ['-s','--std=08'],
+"     \ 'auto_enabled' : 1,
+"     \ 'errorformat': '%E%f:%l:%c: %m',
+"     \ 'exe': 'ghdl',
+"
+" let g:neomake_open_list = 2
+" autocmd! BufWritePost,BufRead * Neomake
+let g:neomake_vhdl_vhdltool_maker = {
+	\ 'exe': 'vhdl-tool',
+	\ 'args': ['client', 'lint', '--compact'],
+	\ 'errorformat': '%f:%l:%c:%t:%m',
+	\ }
+let g:neomake_vhdl_enabled_makers = ['vhdltool']
 
+let g:neomake_cpp_enabled_makers = [{
+    \ 'name' : 'clang',
+    \ 'args': ['-fsyntax-only', '-x', 'c++', '-std=c++1z'],
+    \ 'auto_enabled': 0,
+    \ 'errorformat': '%-G%f:%s:,%f:%l:%c: %trror: %m,%f:%l:%c: %tarning: %m,%I%f:%l:%c: note: %m,%f:%l:%c: %m,%f:%l: %trr or: %m,%f:%l: %tarning: %m,%I%f:%l: note: %m,%f:%l: %m',
+    \ 'exe': 'clang',
+    \ 'orig_args': ['-fsyntax-only', '-Wall', '-Wextra', '-I./'],
+    \ }]
+
+
+function! MyOnBattery()
+  return readfile('/sys/class/power_supply/AC/online') == ['0']
+endfunction
+
+if MyOnBattery()
+  call neomake#configure#automake('w')
+else
+  call neomake#configure#automake('nw', 1000)
+endif
+
+" table mode
+let g:table_mode_corner='|'
 
 " " TagList
 " nmap <leader>m :TlistToggle<CR>
 " let Tlist_GainFocus_On_ToggleOpen = 1
 " let Tlist_Use_Right_Window = 1
 " let Tlist_Exit_OnlyWindow = 1
+"
+"
+

@@ -96,8 +96,8 @@ function calendar.prev() calendar.show(0, -1) end
 function calendar.next() calendar.show(0, 1) end
 
 function calendar.attach(widget)
-    widget:connect_signal("mouse::enter", calendar.hover_on)
-    widget:connect_signal("mouse::leave", calendar.hover_off)
+    -- widget:connect_signal("mouse::enter", calendar.hover_on)
+    -- widget:connect_signal("mouse::leave", calendar.hover_off)
     widget:buttons(awful.util.table.join(
                 awful.button({}, 1, calendar.prev),
                 awful.button({}, 3, calendar.next),

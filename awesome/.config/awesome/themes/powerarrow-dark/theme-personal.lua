@@ -11,7 +11,8 @@ local lain  = require("lain")
 local redflat = require("redflat")
 local awful = require("awful")
 local wibox = require("wibox")
-local os    = { getenv = os.getenv }
+-- local os    = { getenv = os.getenv }
+local os    = os
 local env   = require("env-config")
 local cairo = require("lgi").cairo
 
@@ -40,7 +41,7 @@ theme.tasklist_shape_border_color               = theme.bg_focus
 theme.tasklist_shape_border_color_focus         = theme.fg_focus
 theme.tasklist_plain_task_name                  = true
 theme.tasklist_disable_icon                     = true
-theme.titlebar_bg_focus                         = theme.bg_focus
+theme.titlebar_bg_focus                         = theme.bg_normal
 theme.titlebar_bg_normal                        = theme.bg_normal
 theme.titlebar_fg_focus                         = theme.fg_focus
 theme.menu_height                               = 20
@@ -52,6 +53,10 @@ theme.taglist_shape_border_width               = 1
 theme.taglist_shape_border_width_focus         = 2
 theme.taglist_shape_border_color               = theme.bg_focus
 theme.taglist_shape_border_color_focus         = theme.fg_focus
+-- theme.notification_margin                      = 50
+theme.notification_shape = gears.shape.octogon
+theme.notification_border_color                = theme.fg_focus
+theme.notification_font                         = "Iosevka Term 20"
 theme.layout_tile                               = theme.dir .. "/icons/tile.png"
 theme.layout_tileleft                           = theme.dir .. "/icons/tileleft.png"
 theme.layout_tilebottom                         = theme.dir .. "/icons/tilebottom.png"
@@ -113,15 +118,27 @@ local clock = awful.widget.watch(
     end
 )
 
+local clockwidget = wibox.container.background(clock, theme.bg_focus)
+
 -- Calendar
-theme.cal = lain.widget.calendar({
-    attach_to = { clock.widget },
-    notification_preset = {
-        font = "xos4 Terminus 10",
-        fg   = theme.fg_normal,
-        bg   = theme.bg_normal
-    }
-})
+-- theme.cal = lain.widget.calendar({
+--     cal = "/usr/bin/cal --color=always",
+--     attach_to = { clockwidget },
+--     notification_preset = {
+--         font = "Iosevka Term 11",
+--         fg   = theme.fg_normal,
+--         bg   = theme.bg_normal
+--     }
+-- })
+-- local cal = wibox.widget.calendar.month(os.date("*t"))
+-- local cal = wibox.widget.calendar.month ({
+--     date         = os.date('*t'),
+    -- font         = 'Monospace 8',
+    -- spacing      = 2,
+    -- week_numbers = false,
+    -- start_sunday = false,
+    -- widget       = wibox.widget.calendar.year
+-- })
 
 -- MPD
 local musicplr = awful.util.terminal .. " -title Music -g 130x34-320+16 -e ncmpcpp"
@@ -262,6 +279,16 @@ theme.volume = lain.widget.pulsebar({
     },
     settings = function()
         voldevice:set_markup(volume_now.device)
+        if volume_now.muted == "yes" then
+            volicon:set_image(theme.widget_vol_mute)
+        elseif tonumber(volume_now.left) == 0 then
+            volicon:set_image(theme.widget_vol_no)
+        elseif tonumber(volume_now.left) <= 50 then
+            volicon:set_image(theme.widget_vol_low)
+        else
+            volicon:set_image(theme.widget_vol)
+        end
+
     end
 })
 
@@ -364,14 +391,16 @@ function theme.at_screen_connect(s)
             wibox.container.background(s.mylayoutbox, theme.bg_focus),
             s.mypromptbox,
             -- spr,
+            wibox.widget.textbox(' '),
         },
-        {
-            layout = wibox.layout.align.horizontal,
-            expand = "outside",
-            nil,
-            s.mytasklist, -- Middle widget
-            -- env.wrapper(tasklist[s], "tasklist")
-        },
+        s.mytasklist, -- Middle widget,
+        -- {
+        --     layout = wibox.layout.align.horizontal,
+        --     expand = "outside",
+        --     nil,
+        --     -- s.mytasklist, -- Middle widget
+        --     -- env.wrapper(tasklist[s], "tasklist")
+        -- },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
@@ -388,17 +417,17 @@ function theme.at_screen_connect(s)
             memicon,
             mem.widget,
             -- arrl_ld,
-            spr,
+            -- spr,
             cpuicon,
             cpu.widget,
             -- wibox.container.background(cpuicon, theme.bg_focus),
             -- wibox.container.background(cpu.widget, theme.bg_focus),
             -- arrl_dl,
-            spr,
+            -- spr,
             tempicon,
             temp.widget,
             -- arrl_ld,
-            spr,
+            -- spr,
             neticon,
             net.widget,
             -- wibox.container.background(neticon, theme.bg_focus),
@@ -421,7 +450,7 @@ function theme.at_screen_connect(s)
 --             wibox.container.background(bat_ext.widget, theme.bg_focus),
             -- arrl_dl,
             -- spr,
-            wibox.container.background(clock, theme.bg_focus),
+            clockwidget
         },
     }
 end

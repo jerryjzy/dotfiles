@@ -21,6 +21,7 @@ local helpers       = require("lain.helpers")
 --local menubar       = require("menubar")
 local freedesktop   = require("freedesktop")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+local xrandr = require("xrandr")
 require("awful.remote")
 require("screenful")
 
@@ -61,7 +62,7 @@ local function run_once(cmd_arr)
 end
 
 run_once({  "compton",
-            -- "fcitx",
+            "fcitx",
             "nm-applet",
             "blueman-applet",
             "redshift-gtk",
@@ -75,12 +76,12 @@ run_once({  "compton",
 
 -- {{{ Variable definitions
 local chosen_theme = "powerarrow-dark"
-local modkey       = "Mod1"
-local altkey       = "Mod4"
-local terminal     = "termite"
+local modkey       = "Mod4"
+local altkey       = "Mod1"
+local terminal     = "st"
 local editor       = os.getenv("EDITOR") or "nvim"
-local gui_editor   = "gvim"
-local browser      = "firejail google-chrome-stable"
+local gui_editor   = "nvim-qt"
+local browser      = "firejail qutebrowser"
 
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }
@@ -274,7 +275,7 @@ globalkeys = awful.util.table.join(
     awful.key({ altkey }, "Left", function () lain.util.tag_view_nonempty(-1) end,
               {description = "view  previous nonempty", group = "tag"}),
     awful.key({ altkey }, "Right", function () lain.util.tag_view_nonempty(1) end,
-              {description = "view  previous nonempty", group = "tag"}),
+              {description = "view  next nonempty", group = "tag"}),
 
     -- Default client focus
     awful.key({ modkey,           }, "j",
@@ -358,6 +359,8 @@ globalkeys = awful.util.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey, "Shift"}, "Return", function () awful.util.spawn("st -e ranger") end,
+              {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     -- awful.key({ modkey, "Shift"   }, "e", awesome.quit,
@@ -412,18 +415,21 @@ globalkeys = awful.util.table.join(
         function ()
             -- os.execute(string.format("pactl set-sink-volume %d +1%%", beautiful.volume.device))
             os.execute("amixer -q -D pulse sset Master 5%+")
+            -- os.execute("play /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
             beautiful.volume.notify()
         end),
     awful.key({ altkey }, "Down",
         function ()
             -- os.execute(string.format("pactl set-sink-volume %d -1%%", beautiful.volume.device))
             os.execute("amixer -q -D pulse sset Master 5%-")
+            -- os.execute("play /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
             beautiful.volume.notify()
         end),
     awful.key({ altkey }, "m",
         function ()
             -- os.execute(string.format("pactl set-sink-mute %d toggle", beautiful.volume.device))
             os.execute("amixer -D pulse set Master 1+ toggle")
+            -- os.execute("play /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
             beautiful.volume.notify()
         end),
 
@@ -431,18 +437,21 @@ globalkeys = awful.util.table.join(
         function ()
             -- os.execute(string.format("pactl set-sink-volume %d +1%%", beautiful.volume.device))
             os.execute("amixer -q -D pulse sset Master 5%+")
+            -- os.execute("play /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
             beautiful.volume.notify()
         end),
     awful.key({}, "XF86AudioLowerVolume",
         function ()
             -- os.execute(string.format("pactl set-sink-volume %d -1%%", beautiful.volume.device))
             os.execute("amixer -q -D pulse sset Master 5%-")
+            -- os.execute("play /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
             beautiful.volume.notify()
         end),
     awful.key({}, "XF86AudioMute",
         function ()
             -- os.execute(string.format("pactl set-sink-mute %d toggle", beautiful.volume.device))
             os.execute("amixer -D pulse set Master 1+ toggle")
+            -- os.execute("play /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
             beautiful.volume.notify()
         end),
 
@@ -504,7 +513,8 @@ globalkeys = awful.util.table.join(
     -- Trigger hdmi monitor script
     awful.key({}, "XF86Display",
         function ()
-            awful.util.spawn_with_shell("/home/jerryjzy/Scripts/hdmi.sh")
+            -- awful.util.spawn_with_shell("/home/jerryjzy/Scripts/hdmi.sh")
+            xrandr.xrandr()
         end),
 
     -- Copy primary to clipboard (terminals to gtk)
@@ -528,20 +538,28 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
     --]]
-    --[[ dmenu
-    awful.key({ modkey }, "x", function ()
-        awful.spawn(string.format("dmenu_run -i -fn 'Monospace' -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
-        beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
-        end)
-    --]]
     --
     --
-    -- dmenu
+    ---- dmenu
+    --awful.key({ modkey }, "d", function ()
+    --    awful.util.spawn(string.format("dmenu_run -i -fn 'iosevka term-12' -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
+    --    beautiful.bg_normal, beautiful.fg_normal, beautiful.fg_focus, beautiful.fg_normal))
+    --    end),
+    ----
+
+    -- ROFI
     awful.key({ modkey }, "d", function ()
-        awful.util.spawn(string.format("dmenu_run -i -fn 'iosevka term-12' -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
-        beautiful.bg_normal, beautiful.fg_normal, beautiful.fg_focus, beautiful.fg_normal))
-        end),
-    --
+        awful.util.spawn("rofi -show run -modi run -location 1 -width 100 \
+         -lines 2 -line-margin 0 -line-padding 1 \
+         -separator-style none -font 'mono 10' -columns 9 -bw 0 \
+         -disable-history \
+         -hide-scrollbar \
+         -color-window '#222222, #222222, #b1b4b3' \
+         -color-normal '#222222, #b1b4b3, #222222, #005577, #b1b4b3' \
+         -color-active '#222222, #b1b4b3, #222222, #007763, #b1b4b3' \
+         -color-urgent '#222222, #b1b4b3, #222222, #77003d, #b1b4b3' \
+         -kb-row-select 'Tab' -kb-row-tab ''") end),
+
     -- Prompt
     awful.key({ modkey }, "r", function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}),
@@ -670,7 +688,7 @@ awful.rules.rules = {
 
     -- Titlebars
     { rule_any = { type = { "dialog", "normal" } },
-      properties = { titlebars_enabled = false } },
+      properties = { titlebars_enabled = true} },
 
     -- Set Firefox to always map on the first tag on screen 1.
     { rule = { class = "Firefox" },

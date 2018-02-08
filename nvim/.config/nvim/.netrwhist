@@ -1,10 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =8
-let g:netrw_dirhist_1='/etc/acpi/events'
-let g:netrw_dirhist_2='/home/jerryjzy/.screenlayout'
-let g:netrw_dirhist_3='/home/jerryjzy/.config/nvim'
-let g:netrw_dirhist_4='/home/jerryjzy/.config/nvim/UltiSnips'
-let g:netrw_dirhist_5='/home/jerryjzy/.config/nvim'
-let g:netrw_dirhist_6='/home/jerryjzy/.config'
-let g:netrw_dirhist_7='/home/jerryjzy/dotfiles/awesome/.config/awesome/.archivenew'
-let g:netrw_dirhist_8='/home/jerryjzy/dotfiles/awesome/.config/awesome/themes/blue'
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/jerryjzy/Documents/McGill/classes/info_theory/assignments/ps1'
+let g:netrw_dirhist_2='/home/jerryjzy/.vim/plugged/vim-pandoc'
+let g:netrw_dirhist_3='/home/jerryjzy/.config/qutebrowser'
+let g:netrw_dirhist_4='/home/jerryjzy/dotfiles/st/patches'
