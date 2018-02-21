@@ -68,7 +68,9 @@ run_once({  "compton",
             "redshift-gtk",
             "xmodmap /home/jerryjzy/.Xmodmap",
             "xcape -e 'Control_L=Escape'",
-            "devmon"
+            "devmon",
+            "rocketchat",
+            "slack"
             -- "/home/jerryjzy/script/hdmi.sh",
         })
 

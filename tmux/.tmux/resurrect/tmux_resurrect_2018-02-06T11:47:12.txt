@@ -1,0 +1,5 @@
+pane	0	1	:jupyter	1	:*	1	:/home/jerryjzy/Documents/McGill/classes/aml/proj2	0	nvim	:nvim gm.py
+pane	0	1	:jupyter	1	:*	2	:/home/jerryjzy/Documents/McGill/classes/aml/proj2	1	python3	:/usr/bin/python3 /usr/bin/jupyter-qtconsole
+/usr/bin/python3 /usr/bin/jupyter-console --existing
+window	0	1	1	:*	9820,208x49,0,0{104x49,0,0,0,103x49,105,0,1}
+state	0	

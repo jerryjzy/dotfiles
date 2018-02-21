@@ -29,7 +29,7 @@ theme.fg_urgent                                 = "#DD9393"
 theme.bg_normal                                 = "#1A1A1A"
 theme.bg_focus                                  = "#414141"
 theme.bg_urgent                                 = "#5A1A1A"
-theme.border_width                              = 3
+theme.border_width                              = 4
 theme.border_normal                             = "#3F3F3F"
 theme.border_focus                              = theme.fg_focus
 theme.border_marked                             = "#CC9393"
@@ -363,7 +363,7 @@ function theme.at_screen_connect(s)
     if type(wallpaper) == "function" then
         wallpaper = wallpaper(s)
     end
-    gears.wallpaper.maximized(wallpaper, s, true)
+    gears.wallpaper.maximized(wallpaper, s, false)
 
     -- Tags
     awful.tag(awful.util.tagnames, s, awful.layout.layouts)
